@@ -65,10 +65,12 @@ tokens ni capturas crudas.
 
 ### Estado operativo de las herramientas
 
-- **HostSpy** es un proxy e interceptor de transporte. No implementa por sí
-  solo el login BGS/Aurora ni las salas de SC2.
-- **NetTrace** observa procesos, endpoints TCP/UDP y consultas DNS. No descifra
-  TLS ni captura bytes de aplicación.
+- [**HostSpy**](https://github.com/Chichimokers/hostspy) es un proxy e
+  interceptor de transporte. No implementa por sí solo el login BGS/Aurora ni
+  las salas de SC2.
+- [**NetTrace**](https://github.com/Chichimokers/nettrace) observa procesos,
+  endpoints TCP/UDP y consultas DNS. No descifra TLS ni captura bytes de
+  aplicación.
 - El modo passthrough de HostSpy permite observar que una conexión ocurre,
   pero mantiene cifrados los mensajes TLS.
 - Los logs de aplicación y WebSocket pueden contener correo, BattleTag, IDs,
