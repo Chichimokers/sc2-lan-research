@@ -18,7 +18,8 @@ tokens ni capturas crudas.
 
 | Tema | Estado | Evidencia / límite |
 |---|---|---|
-| HostSpy funciona como proxy para tráfico HTTP/HTTPS del cliente Battle.net | Observado en las pruebas del proyecto | No implica que SC2 acepte el mismo certificado ni que el proxy funcione como servidor BGS. |
+| HostSpy puede terminar TLS y ver el tráfico BGS del cliente de escritorio de Battle.net | Confirmado en las pruebas del proyecto | Ese flujo acepta el certificado de HostSpy y no presenta un rechazo por certificate pinning; no demuestra que SC2 haga lo mismo. |
+| El flujo BGS del cliente de escritorio Battle.net comparte el protocolo/framing observado también en SC2 | Confirmado para el protocolo de aplicación observado | La captura legible procede del cliente Battle.net (`BGS C++ SDK 8.1.0`); no sustituye una captura equivalente de SC2. |
 | `SC2_x64.exe` usa el flujo BGS por TCP 1119 | Observado | El protocolo de aplicación de esa conexión todavía no se ha recibido con éxito en el cliente SC2. |
 | En un ensayo, TLS con HostSpy y con el upstream terminó; SC2 cerró antes de enviar datos de aplicación | Observado en una captura | No identifica por sí solo la causa del cierre. |
 | SC2 rechaza el certificado por pinning SPKI | Hipótesis | No confirmado. También pueden intervenir el bundle, otra validación, una condición de sesión o el arranque BGS. |
@@ -32,9 +33,15 @@ tokens ni capturas crudas.
 
 - HostSpy redirige nombres configurados mediante el archivo `hosts`; puede
   terminar TLS para observar aplicación o tunelar TLS extremo a extremo.
-- TCP 1119 está asociado al flujo BGS. El WebSocket `v1.rpc.battle.net` y el
-  framing protobuf se observaron en una captura del cliente de escritorio de
-  Battle.net (`BGS C++ SDK 8.1.0`), no se deben atribuir automáticamente a SC2.
+- TCP 1119 está asociado al flujo BGS. HostSpy sí puede terminar TLS y leer
+  mensajes de aplicación del cliente de escritorio Battle.net en esa conexión:
+  ese cliente no rechaza el certificado local por certificate pinning en la
+  prueba realizada.
+- En esa captura de Battle.net (`BGS C++ SDK 8.1.0`) se observaron el WebSocket
+  `v1.rpc.battle.net` y el framing protobuf BGS que investigamos también para
+  SC2. La visibilidad del flujo Battle.net sirve para estudiar el protocolo,
+  pero no permite concluir que SC2 acepte el mismo certificado o tenga las
+  mismas validaciones.
 - Una negociación TLS completada no demuestra que la capa de aplicación haya
   aceptado el certificado, el bundle o la identidad del servidor.
 - La petición investigada del bundle es
