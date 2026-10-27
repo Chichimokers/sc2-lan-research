@@ -1,0 +1,28 @@
+# Game binaries, crash dumps and local captures must stay out of this research repo.
+*.exe
+*.dll
+*.dmp
+*.log
+*.decoded.txt
+*.pcap
+*.pcapng
+*.db
+*.db-wal
+*.db-shm
+*.sqlite*
+
+# Local certificates, signed bundles, and private keys.
+*.key
+*.pem
+*.crt
+*.pfx
+*.p12
+*.der
+*.bkp
+*.bundle
+
+# Machine-specific configuration and generated output.
+config.local*.json
+/captures/
+/logs/
+/out/
